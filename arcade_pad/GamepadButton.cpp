@@ -42,7 +42,7 @@
  
  void GamepadButton::invoke()
  {
-    if(!active || debounceTimeExpired())
+    if(!active | debounceTimeExpired())
     {
       switch(type)
       {
@@ -59,7 +59,7 @@
 
  void GamepadButton::release()
  {
-    if(!active)
+    if(active)
     {
       switch(type)
       {

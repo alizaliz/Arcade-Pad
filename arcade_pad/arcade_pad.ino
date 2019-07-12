@@ -18,22 +18,22 @@ BYTES_VAL_T pinValues;
 
 GamepadButton gpButtons[16] =
 {
-  GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 1),
-  GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 1),
-  GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 1),
-  GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 1),
-  GamepadButton(GENERIC, 1, 10),
-  GamepadButton(GENERIC, 2, 10),
-  GamepadButton(GENERIC, 3, 10),
-  GamepadButton(GENERIC, 4, 10),
-  GamepadButton(GENERIC, 5, 10),
-  GamepadButton(GENERIC, 6, 10),
-  GamepadButton(GENERIC, 7, 10),
-  GamepadButton(GENERIC, 8, 10),
-  GamepadButton(GENERIC, 9, 10),
-  GamepadButton(GENERIC, 10, 10),
-  GamepadButton(GENERIC, 11, 10),
-  GamepadButton(GENERIC, 12, 10),
+  GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 250),
+  GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250),
+  GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250),
+  GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250),
+  GamepadButton(GENERIC, 1, 500),
+  GamepadButton(GENERIC, 2, 500),
+  GamepadButton(GENERIC, 3, 500),
+  GamepadButton(GENERIC, 4, 500),
+  GamepadButton(GENERIC, 5, 500),
+  GamepadButton(GENERIC, 6, 500),
+  GamepadButton(GENERIC, 7, 500),
+  GamepadButton(GENERIC, 8, 500),
+  GamepadButton(GENERIC, 9, 500),
+  GamepadButton(GENERIC, 10, 500),
+  GamepadButton(GENERIC, 11, 500),
+  GamepadButton(GENERIC, 12, 500),
 };
 
 
@@ -95,12 +95,10 @@ void setup()
     digitalWrite(ploadPin, HIGH);
 
     Gamepad.begin();
-    
 }
 
 void loop()
 {
-
     pinValues = read_shift_regs();
     send_reports();
 
