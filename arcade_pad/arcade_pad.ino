@@ -1,4 +1,5 @@
 
+#include "Bounce2.h"
 #include "HID-Project.h"
 #include "GamepadButton.h"
 
@@ -6,13 +7,22 @@
 #define DATA_WIDTH NUMBER_OF_SHIFT_CHIPS * 8 // Width of data (how many ext lines).
 #define PULSE_WIDTH_USEC 5                   // Width of pulse to trigger the shift register to read and latch.
 #define POLL_DELAY_MSEC 1                    // Optional delay between shift register reads.
+#define DEFAULT_DEBOUNCE_TIME 500
 
 int ploadPin = 6;       // Connects to Parallel load pin the 165
 int clockEnablePin = 8; // Connects to Clock Enable pin the 165
 int dataPin = 9;        // Connects to the Q7 pin the 165
 int clockPin = 7;       // Connects to the Clock pin the 165
 
+int potPin = A0;   // Input pin for potentiometer
+int turboButtonPin = 15; // Turbo switch
+
+Bounce turboButton = Bounce(); // Latching button for turbo
+
 unsigned int pinValues;
+uint16_t oldPotValue = DEFAULT_DEBOUNCE_TIME;  
+uint16_t curPotValue = DEFAULT_DEBOUNCE_TIME;
+
 
 GamepadButton gpButtons[16] =
     {
@@ -20,18 +30,18 @@ GamepadButton gpButtons[16] =
         GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250),
         GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250),
         GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250),
-        GamepadButton(GENERIC, 1, 500),
-        GamepadButton(GENERIC, 2, 500),
-        GamepadButton(GENERIC, 3, 500),
-        GamepadButton(GENERIC, 4, 500),
-        GamepadButton(GENERIC, 5, 500),
-        GamepadButton(GENERIC, 6, 500),
-        GamepadButton(GENERIC, 7, 500),
-        GamepadButton(GENERIC, 8, 500),
-        GamepadButton(GENERIC, 9, 500),
-        GamepadButton(GENERIC, 10, 500),
-        GamepadButton(GENERIC, 11, 500),
-        GamepadButton(GENERIC, 12, 500),
+        GamepadButton(GENERIC, 1, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 2, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 3, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 4, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 5, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 6, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 7, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 8, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 9, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 10, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 11, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, 12, DEFAULT_DEBOUNCE_TIME),
 };
 
 /* This function is essentially a "shift-in" routine reading the
@@ -81,6 +91,19 @@ void sendReports()
   }
 }
 
+void updateTurbo()
+{
+  // Read slider potentiometer
+  curPotValue = (uint16_t)map(analogRead(potPin), 0 , 1020 , 0 , DEFAULT_DEBOUNCE_TIME);
+  if(curPotValue != oldPotValue) return;
+  
+  oldPotValue = curPotValue;
+  for (int i = 4; i < 12 ; i++)
+  {
+    gpButtons[i].debounceTime(curPotValue);
+  }
+}
+
 void setup()
 {
   pinMode(ploadPin, OUTPUT);
@@ -91,11 +114,21 @@ void setup()
   digitalWrite(clockPin, LOW);
   digitalWrite(ploadPin, HIGH);
 
+  turboButton.attach(turboButtonPin);
+  turboButton.interval(DEFAULT_DEBOUNCE_TIME); 
+
   Gamepad.begin();
 }
 
 void loop()
 {
+  // Torbo! latch switch
+  turboButton.update();
+  if(turboButton.read() == HIGH)
+  {
+    updateTurbo();
+  }
+  // Update shift register
   pinValues = readShiftRegs();
   sendReports();
 
