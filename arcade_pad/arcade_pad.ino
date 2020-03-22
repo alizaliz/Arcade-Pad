@@ -98,9 +98,15 @@ void updateTurbo()
   if(curPotValue != oldPotValue) return;
   
   oldPotValue = curPotValue;
+  setButtonDebounce(curPotValue);
+  
+}
+
+void setButtonDebounce(uint16_t time)
+{
   for (int i = 4; i < 12 ; i++)
   {
-    gpButtons[i].debounceTime(curPotValue);
+    gpButtons[i].debounceTime(time);
   }
 }
 
@@ -127,6 +133,10 @@ void loop()
   if(turboButton.read() == HIGH)
   {
     updateTurbo();
+  }
+  else if(turboButton.fell())
+  {
+    setButtonDebounce(DEFAULT_DEBOUNCE_TIME);
   }
   // Update shift register
   pinValues = readShiftRegs();
