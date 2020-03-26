@@ -4,67 +4,83 @@
  * 
  */
 
- #include "Arduino.h"
- #include "GamepadButton.h"
+#include "Arduino.h"
+#include "GamepadButton.h"
 
- GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t interval_millis)
- {
-    this->type = type;
-    this->button_value = button_value;
-    this->interval_millis = interval_millis;
- }
+GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t debounce_millis)
+{
+  this->type = type;
+  this->button_value = button_value;
+  this->debounce_millis = debounce_millis;
+}
 
- void GamepadButton::setType(int type)
- {
-    this->type = type;
- }
+GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t debounce_millis, uint16_t retrigger_millis)
+{
+  GamepadButton(type, button_value, debounce_millis);
+  this->retrigger_millis = retrigger_millis;
+}
 
- void GamepadButton::setValue(KeyboardKeycode button_value)
- {
-    this->button_value = button_value;
- }
+int GamepadButton::getType()
+{
+  return type;
+}
 
- void GamepadButton::debounceTime(uint16_t interval_millis)
- {
-    this->interval_millis = interval_millis;
- }
+void GamepadButton::setType(int type)
+{
+  this->type = type;
+}
 
- bool GamepadButton::debounceTimeExpired()
- {
-    return ( millis() - previous_millis >= interval_millis);
- }
- 
- void GamepadButton::invoke()
- {
-    if(!active && debounceTimeExpired())
-    {
-      switch(type)
-      {
-        case D_PAD:
-          Keyboard.press(button_value);
-          break;
-        case GENERIC:
-          Keyboard.press(button_value);
-          break;
-      }
-    }
-    active = true;
- }
+void GamepadButton::setValue(KeyboardKeycode button_value)
+{
+  this->button_value = button_value;
+}
 
- void GamepadButton::release()
- {
-    if(active)
-    {
-      switch(type)
-      {
-        case D_PAD:          
-          Keyboard.release(button_value);
-          break;
-        case GENERIC:
-          Keyboard.release(button_value);
-          break;
-      }
-      active = false;
-      previous_millis = millis();
-    }
- }
+void GamepadButton::debounceTime(uint16_t debounce_millis)
+{
+  this->debounce_millis = debounce_millis;
+}
+
+void GamepadButton::retriggerTime(uint16_t retrigger_millis)
+{
+  this->retrigger_millis = retrigger_millis;
+}
+
+void GamepadButton::setTurbo(bool enable)
+{
+  this->turbo = enable;
+}
+
+bool GamepadButton::debounceTimeExpired()
+{
+  return (millis() - previous_millis >= debounce_millis);
+}
+
+bool GamepadButton::retriggerTimeExpired()
+{
+  return (millis() - previous_millis >= retrigger_millis);
+}
+
+void GamepadButton::invoke()
+{
+  if (!active && debounceTimeExpired())
+  {
+    Keyboard.press(button_value);
+  }
+  else if(type == GENERIC && active && turbo && retriggerTimeExpired())
+  {
+    Keyboard.release(button_value);
+    Keyboard.press(button_value);
+    previous_millis = millis();
+  }
+  active = true;
+}
+
+void GamepadButton::release()
+{
+  if (active)
+  {
+    Keyboard.release(button_value);
+    active = false;
+    previous_millis = millis();
+  }
+}
