@@ -48,9 +48,13 @@
       {
         case D_PAD:
           Gamepad.dPad1(button_value);
+          Serial.print("D-pad: ");
+          Serial.println(button_value);
           break;
         case GENERIC:
           Gamepad.press(button_value);
+          Serial.print("Button pressed: ");
+          Serial.println(button_value);
           break;
       }
     }
@@ -65,9 +69,12 @@
       {
         case D_PAD:
           Gamepad.dPad1(GAMEPAD_DPAD_CENTERED);
+          Serial.println("D - Pad centered");
           break;
         case GENERIC:
           Gamepad.release(button_value);
+          Serial.print("Button released: ");
+          Serial.println(button_value);
           break;
       }
       active = false;

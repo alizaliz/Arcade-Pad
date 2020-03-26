@@ -92,6 +92,8 @@ void setup()
   digitalWrite(ploadPin, HIGH);
 
   Gamepad.begin();
+
+  Serial.begin(9600);
 }
 
 void loop()
