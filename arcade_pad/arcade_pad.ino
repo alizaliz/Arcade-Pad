@@ -16,22 +16,22 @@ unsigned int pinValues;
 
 GamepadButton gpButtons[16] =
     {
-        GamepadButton(GENERIC, 12, 500), // D
-        GamepadButton(GENERIC, 11, 500), // B
-        GamepadButton(GENERIC, 10, 500), // C
-        GamepadButton(GENERIC, 9, 500), // A
-        GamepadButton(GENERIC, 8, 500), // Down
-        GamepadButton(GENERIC, 7, 500), // Up
-        GamepadButton(GENERIC, 6, 500), // Right
-        GamepadButton(GENERIC, 5, 500), // Left
-        GamepadButton(GENERIC, 4, 500),
-        GamepadButton(GENERIC, 3, 500),
-        GamepadButton(GENERIC, 2, 500),
-        GamepadButton(GENERIC, 1, 500),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 250), // Z
-        GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250), // X
-        GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250), // Y
-        GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250) // W
+        GamepadButton(GENERIC, HID_KEYBOARD_D_AND_D, 500), // D
+        GamepadButton(GENERIC, HID_KEYBOARD_B_AND_B, 500), // B
+        GamepadButton(GENERIC, HID_KEYBOARD_C_AND_C, 500), // C
+        GamepadButton(GENERIC, HID_KEYBOARD_A_AND_A, 500), // A
+        GamepadButton(D_PAD, HID_KEYBOARD_DOWNARROW, 500), // Down
+        GamepadButton(D_PAD, HID_KEYBOARD_UPARROW, 500), // Up
+        GamepadButton(D_PAD, HID_KEYBOARD_RIGHTARROW, 500), // Right
+        GamepadButton(D_PAD, HID_KEYBOARD_LEFTARROW, 500), // Left
+        GamepadButton(GENERIC, HID_KEYBOARD_U_AND_U, 500), // Empty
+        GamepadButton(GENERIC, HID_KEYBOARD_S_AND_S, 500), // Empty
+        GamepadButton(GENERIC, HID_KEYBOARD_T_AND_T, 500), // Empty
+        GamepadButton(GENERIC, HID_KEYBOARD_R_AND_R, 500), // Empty
+        GamepadButton(GENERIC, HID_KEYBOARD_Z_AND_Z, 250), // Z
+        GamepadButton(GENERIC, HID_KEYBOARD_X_AND_X, 250), // X
+        GamepadButton(GENERIC, HID_KEYBOARD_Y_AND_Y, 250), // Y
+        GamepadButton(GENERIC, HID_KEYBOARD_W_AND_W, 250) // W
 };
 
 /* This function is essentially a "shift-in" routine reading the
@@ -91,9 +91,7 @@ void setup()
   digitalWrite(clockPin, LOW);
   digitalWrite(ploadPin, HIGH);
 
-  Gamepad.begin();
-
-  Serial.begin(9600);
+  Keyboard.begin();
 }
 
 void loop()

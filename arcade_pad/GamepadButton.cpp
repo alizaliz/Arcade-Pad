@@ -6,9 +6,8 @@
 
  #include "Arduino.h"
  #include "GamepadButton.h"
- #include "HID-Project.h"
 
- GamepadButton::GamepadButton(int type, uint8_t button_value, uint16_t interval_millis)
+ GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t interval_millis)
  {
     this->type = type;
     this->button_value = button_value;
@@ -20,7 +19,7 @@
     this->type = type;
  }
 
- void GamepadButton::setValue(uint8_t button_value)
+ void GamepadButton::setValue(KeyboardKeycode button_value)
  {
     this->button_value = button_value;
  }
@@ -47,14 +46,10 @@
       switch(type)
       {
         case D_PAD:
-          Gamepad.dPad1(button_value);
-          Serial.print("D-pad: ");
-          Serial.println(button_value);
+          Keyboard.press(button_value);
           break;
         case GENERIC:
-          Gamepad.press(button_value);
-          Serial.print("Button pressed: ");
-          Serial.println(button_value);
+          Keyboard.press(button_value);
           break;
       }
     }
@@ -67,14 +62,11 @@
     {
       switch(type)
       {
-        case D_PAD:
-          Gamepad.dPad1(GAMEPAD_DPAD_CENTERED);
-          Serial.println("D - Pad centered");
+        case D_PAD:          
+          Keyboard.release(button_value);
           break;
         case GENERIC:
-          Gamepad.release(button_value);
-          Serial.print("Button released: ");
-          Serial.println(button_value);
+          Keyboard.release(button_value);
           break;
       }
       active = false;
