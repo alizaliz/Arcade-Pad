@@ -31,17 +31,12 @@
 
  bool GamepadButton::debounceTimeExpired()
  {
-    if( millis() - previous_millis >= interval_millis)
-    {
-      previous_millis = millis();
-      return true;
-    }
-    return false;
+    return ( millis() - previous_millis >= interval_millis);
  }
  
  void GamepadButton::invoke()
  {
-    if(!active | debounceTimeExpired())
+    if(!active && debounceTimeExpired())
     {
       switch(type)
       {
@@ -70,5 +65,6 @@
           break;
       }
       active = false;
+      previous_millis = millis();
     }
  }
