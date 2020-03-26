@@ -8,6 +8,7 @@
  #define GamepadButton_h
 
  #include "Arduino.h"
+ #include "HID-Project.h"
 
 // Type of button
  #define D_PAD 0
@@ -17,9 +18,9 @@ class GamepadButton
 {
   public:
   
-    GamepadButton(int type, uint8_t button_value, uint16_t interval_millis);
+    GamepadButton(int type, KeyboardKeycode button_value, uint16_t interval_millis);
     void setType(int type);
-    void setValue(uint8_t button_value);
+    void setValue(KeyboardKeycode button_value);
     void debounceTime(uint16_t interval_millis);
     void invoke();
     void release();
@@ -27,10 +28,10 @@ class GamepadButton
   protected:
 
     int type = GENERIC;
-    int32_t previous_millis = 0;
-    int32_t interval_millis = 0;
-    uint8_t button_value = 0;
-    bool active = false;
+    int32_t previous_millis;
+    int32_t interval_millis;
+    KeyboardKeycode button_value;
+    bool active;
 
   private:
 

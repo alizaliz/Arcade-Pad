@@ -6,9 +6,8 @@
 
  #include "Arduino.h"
  #include "GamepadButton.h"
- #include "HID-Project.h"
 
- GamepadButton::GamepadButton(int type, uint8_t button_value, uint16_t interval_millis)
+ GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t interval_millis)
  {
     this->type = type;
     this->button_value = button_value;
@@ -20,7 +19,7 @@
     this->type = type;
  }
 
- void GamepadButton::setValue(uint8_t button_value)
+ void GamepadButton::setValue(KeyboardKeycode button_value)
  {
     this->button_value = button_value;
  }
@@ -32,25 +31,20 @@
 
  bool GamepadButton::debounceTimeExpired()
  {
-    if( millis() - previous_millis >= interval_millis)
-    {
-      previous_millis = millis();
-      return true;
-    }
-    return false;
+    return ( millis() - previous_millis >= interval_millis);
  }
  
  void GamepadButton::invoke()
  {
-    if(!active | debounceTimeExpired())
+    if(!active && debounceTimeExpired())
     {
       switch(type)
       {
         case D_PAD:
-          Gamepad.dPad1(button_value);
+          Keyboard.press(button_value);
           break;
         case GENERIC:
-          Gamepad.press(button_value);
+          Keyboard.press(button_value);
           break;
       }
     }
@@ -63,13 +57,14 @@
     {
       switch(type)
       {
-        case D_PAD:
-          Gamepad.dPad1(GAMEPAD_DPAD_CENTERED);
+        case D_PAD:          
+          Keyboard.release(button_value);
           break;
         case GENERIC:
-          Gamepad.release(button_value);
+          Keyboard.release(button_value);
           break;
       }
       active = false;
+      previous_millis = millis();
     }
  }

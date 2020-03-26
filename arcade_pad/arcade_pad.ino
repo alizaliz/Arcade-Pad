@@ -7,7 +7,7 @@
 #define DATA_WIDTH NUMBER_OF_SHIFT_CHIPS * 8 // Width of data (how many ext lines).
 #define PULSE_WIDTH_USEC 5                   // Width of pulse to trigger the shift register to read and latch.
 #define POLL_DELAY_MSEC 1                    // Optional delay between shift register reads.
-#define DEFAULT_DEBOUNCE_TIME 500
+#define DEFAULT_DEBOUNCE_TIME 25             // Switch actuation debouce time
 
 int ploadPin = 6;       // Connects to Parallel load pin the 165
 int clockEnablePin = 8; // Connects to Clock Enable pin the 165
@@ -26,22 +26,22 @@ uint16_t curPotValue = DEFAULT_DEBOUNCE_TIME;
 
 GamepadButton gpButtons[16] =
     {
-        GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250),
-        GamepadButton(GENERIC, 1, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 2, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 3, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 4, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 5, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 6, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 7, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 8, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 9, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 10, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 11, DEFAULT_DEBOUNCE_TIME),
-        GamepadButton(GENERIC, 12, DEFAULT_DEBOUNCE_TIME),
+        GamepadButton(GENERIC, KEY_D, DEFAULT_DEBOUNCE_TIME), // D
+        GamepadButton(GENERIC, KEY_B, DEFAULT_DEBOUNCE_TIME), // B
+        GamepadButton(GENERIC, KEY_C, DEFAULT_DEBOUNCE_TIME), // C
+        GamepadButton(GENERIC, KEY_A, DEFAULT_DEBOUNCE_TIME), // A
+        GamepadButton(D_PAD, KEY_DOWN_ARROW, DEFAULT_DEBOUNCE_TIME), // Down
+        GamepadButton(D_PAD, KEY_UP_ARROW, DEFAULT_DEBOUNCE_TIME), // Up
+        GamepadButton(D_PAD, KEY_RIGHT_ARROW, DEFAULT_DEBOUNCE_TIME), // Right
+        GamepadButton(D_PAD, KEY_LEFT_ARROW, DEFAULT_DEBOUNCE_TIME), // Left
+        GamepadButton(GENERIC, KEY_ESC, DEFAULT_DEBOUNCE_TIME), // Empty
+        GamepadButton(GENERIC, KEY_ENTER, DEFAULT_DEBOUNCE_TIME), // Empty
+        GamepadButton(GENERIC, KEY_T, DEFAULT_DEBOUNCE_TIME), // Empty
+        GamepadButton(GENERIC, KEY_R, DEFAULT_DEBOUNCE_TIME), // Empty
+        GamepadButton(GENERIC, KEY_Z, DEFAULT_DEBOUNCE_TIME), // Z
+        GamepadButton(GENERIC, KEY_X, DEFAULT_DEBOUNCE_TIME), // X
+        GamepadButton(GENERIC, KEY_Y, DEFAULT_DEBOUNCE_TIME), // Y
+        GamepadButton(GENERIC, KEY_W, DEFAULT_DEBOUNCE_TIME) // W
 };
 
 /* This function is essentially a "shift-in" routine reading the
@@ -120,10 +120,7 @@ void setup()
   digitalWrite(clockPin, LOW);
   digitalWrite(ploadPin, HIGH);
 
-  turboButton.attach(turboButtonPin);
-  turboButton.interval(DEFAULT_DEBOUNCE_TIME); 
-
-  Gamepad.begin();
+  Keyboard.begin();
 }
 
 void loop()
