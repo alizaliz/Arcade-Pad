@@ -16,22 +16,22 @@ unsigned int pinValues;
 
 GamepadButton gpButtons[16] =
     {
-        GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250),
-        GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250),
-        GamepadButton(GENERIC, 1, 500),
-        GamepadButton(GENERIC, 2, 500),
-        GamepadButton(GENERIC, 3, 500),
+        GamepadButton(GENERIC, 12, 500), // D
+        GamepadButton(GENERIC, 11, 500), // B
+        GamepadButton(GENERIC, 10, 500), // C
+        GamepadButton(GENERIC, 9, 500), // A
+        GamepadButton(GENERIC, 8, 500), // Down
+        GamepadButton(GENERIC, 7, 500), // Up
+        GamepadButton(GENERIC, 6, 500), // Right
+        GamepadButton(GENERIC, 5, 500), // Left
         GamepadButton(GENERIC, 4, 500),
-        GamepadButton(GENERIC, 5, 500),
-        GamepadButton(GENERIC, 6, 500),
-        GamepadButton(GENERIC, 7, 500),
-        GamepadButton(GENERIC, 8, 500),
-        GamepadButton(GENERIC, 9, 500),
-        GamepadButton(GENERIC, 10, 500),
-        GamepadButton(GENERIC, 11, 500),
-        GamepadButton(GENERIC, 12, 500),
+        GamepadButton(GENERIC, 3, 500),
+        GamepadButton(GENERIC, 2, 500),
+        GamepadButton(GENERIC, 1, 500),
+        GamepadButton(D_PAD, GAMEPAD_DPAD_UP, 250), // Z
+        GamepadButton(D_PAD, GAMEPAD_DPAD_RIGHT, 250), // X
+        GamepadButton(D_PAD, GAMEPAD_DPAD_DOWN, 250), // Y
+        GamepadButton(D_PAD, GAMEPAD_DPAD_LEFT, 250) // W
 };
 
 /* This function is essentially a "shift-in" routine reading the
