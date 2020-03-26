@@ -16,22 +16,22 @@ unsigned int pinValues;
 
 GamepadButton gpButtons[16] =
     {
-        GamepadButton(GENERIC, HID_KEYBOARD_D_AND_D, 500), // D
-        GamepadButton(GENERIC, HID_KEYBOARD_B_AND_B, 500), // B
-        GamepadButton(GENERIC, HID_KEYBOARD_C_AND_C, 500), // C
-        GamepadButton(GENERIC, HID_KEYBOARD_A_AND_A, 500), // A
-        GamepadButton(D_PAD, HID_KEYBOARD_DOWNARROW, 500), // Down
-        GamepadButton(D_PAD, HID_KEYBOARD_UPARROW, 500), // Up
-        GamepadButton(D_PAD, HID_KEYBOARD_RIGHTARROW, 500), // Right
-        GamepadButton(D_PAD, HID_KEYBOARD_LEFTARROW, 500), // Left
-        GamepadButton(GENERIC, HID_KEYBOARD_U_AND_U, 500), // Empty
-        GamepadButton(GENERIC, HID_KEYBOARD_S_AND_S, 500), // Empty
-        GamepadButton(GENERIC, HID_KEYBOARD_T_AND_T, 500), // Empty
-        GamepadButton(GENERIC, HID_KEYBOARD_R_AND_R, 500), // Empty
-        GamepadButton(GENERIC, HID_KEYBOARD_Z_AND_Z, 250), // Z
-        GamepadButton(GENERIC, HID_KEYBOARD_X_AND_X, 250), // X
-        GamepadButton(GENERIC, HID_KEYBOARD_Y_AND_Y, 250), // Y
-        GamepadButton(GENERIC, HID_KEYBOARD_W_AND_W, 250) // W
+        GamepadButton(GENERIC, KEY_D, 500), // D
+        GamepadButton(GENERIC, KEY_B, 500), // B
+        GamepadButton(GENERIC, KEY_C, 500), // C
+        GamepadButton(GENERIC, KEY_A, 500), // A
+        GamepadButton(D_PAD, KEY_DOWN_ARROW, 500), // Down
+        GamepadButton(D_PAD, KEY_UP_ARROW, 500), // Up
+        GamepadButton(D_PAD, KEY_RIGHT_ARROW, 500), // Right
+        GamepadButton(D_PAD, KEY_LEFT_ARROW, 500), // Left
+        GamepadButton(GENERIC, KEY_ESC, 500), // Empty
+        GamepadButton(GENERIC, KEY_ENTER, 500), // Empty
+        GamepadButton(GENERIC, KEY_T, 500), // Empty
+        GamepadButton(GENERIC, KEY_R, 500), // Empty
+        GamepadButton(GENERIC, KEY_Z, 250), // Z
+        GamepadButton(GENERIC, KEY_X, 250), // X
+        GamepadButton(GENERIC, KEY_Y, 250), // Y
+        GamepadButton(GENERIC, KEY_W, 250) // W
 };
 
 /* This function is essentially a "shift-in" routine reading the
