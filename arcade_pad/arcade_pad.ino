@@ -7,7 +7,7 @@
 #define DATA_WIDTH NUMBER_OF_SHIFT_CHIPS * 8 // Width of data (how many ext lines).
 #define PULSE_WIDTH_USEC 5                   // Width of pulse to trigger the shift register to read and latch.
 #define POLL_DELAY_MSEC 1                    // Optional delay between shift register reads.
-#define DEFAULT_DEBOUNCE_TIME 25             // Switch actuation debouce time
+#define DEFAULT_DEBOUNCE_TIME 20             // Switch actuation debouce time
 #define DEFAULT_RETRIGGER_TIME 500           // Hold retrigger time (Turbo)
 
 int ploadPin = 6;       // Connects to Parallel load pin the 165
@@ -15,8 +15,9 @@ int clockEnablePin = 8; // Connects to Clock Enable pin the 165
 int dataPin = 9;        // Connects to the Q7 pin the 165
 int clockPin = 7;       // Connects to the Clock pin the 165
 
-int potPin = A0;         // Input pin for potentiometer
-int turboButtonPin = 15; // Turbo switch
+int potPin = A0;                      // Input pin for potentiometer
+int turboButtonPin = 15;              // Turbo switch
+const int potExtents[2] = {140, 950}; // Values related to analog read min/max (determined by resistance)
 
 Bounce turboButton = Bounce(); // Latching button for turbo
 
@@ -95,8 +96,8 @@ void sendReports()
 void updateTurbo()
 {
   // Read slider potentiometer
-  curPotValue = (uint16_t)map(analogRead(potPin), 0, 1020, 0, DEFAULT_RETRIGGER_TIME);
-  if (curPotValue != oldPotValue)
+  curPotValue = (uint16_t)map(analogRead(potPin), potExtents[0], potExtents[1], DEFAULT_DEBOUNCE_TIME, DEFAULT_RETRIGGER_TIME);
+  if (abs(curPotValue - oldPotValue) < 2) // Remove noise
     return;
 
   oldPotValue = curPotValue;
@@ -130,6 +131,11 @@ void setup()
 
   digitalWrite(clockPin, LOW);
   digitalWrite(ploadPin, HIGH);
+
+  turboButton.attach(turboButtonPin);
+  turboButton.interval(DEFAULT_DEBOUNCE_TIME);
+
+  pinMode(potPin, INPUT_PULLUP);
 
   Keyboard.begin();
 }
