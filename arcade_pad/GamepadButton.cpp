@@ -16,7 +16,9 @@ GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t de
 
 GamepadButton::GamepadButton(int type, KeyboardKeycode button_value, uint16_t debounce_millis, uint16_t retrigger_millis)
 {
-  GamepadButton(type, button_value, debounce_millis);
+  this->type = type;
+  this->button_value = button_value;
+  this->debounce_millis = debounce_millis;
   this->retrigger_millis = retrigger_millis;
 }
 
@@ -66,7 +68,7 @@ void GamepadButton::invoke()
   {
     Keyboard.press(button_value);
   }
-  else if(type == GENERIC && active && turbo && retriggerTimeExpired())
+  else if (type == GENERIC && active && turbo && retriggerTimeExpired())
   {
     Keyboard.release(button_value);
     Keyboard.press(button_value);
