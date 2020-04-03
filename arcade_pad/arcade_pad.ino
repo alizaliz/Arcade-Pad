@@ -106,7 +106,7 @@ void updateTurbo()
 
 void setButtonTriggerTime(uint16_t time)
 {
-  for (int i = 0; i < 12; i++)
+  for (int i = 0; i < DATA_WIDTH; i++)
   {
     if (gpButtons[i].getType() == GENERIC)
       gpButtons[i].retriggerTime(time);
@@ -115,7 +115,7 @@ void setButtonTriggerTime(uint16_t time)
 
 void enableTurbo(bool enable)
 {
-  for (int i = 0; i < 12; i++)
+  for (int i = 0; i < DATA_WIDTH; i++)
   {
     if (gpButtons[i].getType() == GENERIC)
       gpButtons[i].setTurbo(enable);
@@ -161,5 +161,5 @@ void loop()
   pinValues = readShiftRegs();
   sendReports();
 
-  delay(POLL_DELAY_MSEC);
+  //delay(POLL_DELAY_MSEC);
 }

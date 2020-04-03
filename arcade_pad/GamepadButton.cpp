@@ -70,8 +70,7 @@ void GamepadButton::invoke()
   }
   else if (type == GENERIC && active && turbo && retriggerTimeExpired())
   {
-    Keyboard.release(button_value);
-    Keyboard.press(button_value);
+    Keyboard.write(button_value);
     previous_millis = millis();
   }
   active = true;
