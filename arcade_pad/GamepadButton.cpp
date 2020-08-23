@@ -64,11 +64,11 @@ bool GamepadButton::retriggerTimeExpired()
 
 void GamepadButton::invoke()
 {
-  if (!active && debounceTimeExpired())
+  if (!turbo && debounceTimeExpired())
   {
     Keyboard.press(button_value);
   }
-  else if (type == GENERIC && active && turbo && retriggerTimeExpired())
+  else if (type == GENERIC && turbo && retriggerTimeExpired())
   {
     Keyboard.write(button_value);
     previous_millis = millis();
@@ -78,7 +78,7 @@ void GamepadButton::invoke()
 
 void GamepadButton::release()
 {
-  if (active)
+  if (!active)
   {
     Keyboard.release(button_value);
     active = false;
